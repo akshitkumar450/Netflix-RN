@@ -6,7 +6,7 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import movie from "../assets/movie";
 import tw from "tailwind-react-native-classnames";
 import {
@@ -17,14 +17,27 @@ import {
   Feather,
 } from "@expo/vector-icons";
 import EpisodeItem from "../components/EpisodeItem";
+import { Picker } from "@react-native-picker/picker";
 const DetailsScreen = () => {
-  const episodes = movie.seasons.items[0].episodes.items;
-  const movieItem = episodes[0];
+  //   const episodes = movie.seasons.items[0].episodes.items;
+  //   const movieItem = episodes[0];
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    movie.seasons.items[0].name
+  );
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const index = movie.seasons.items.findIndex(
+      (item) => item.name === selectedLanguage
+    );
+    setIndex(index);
+  }, [selectedLanguage]);
   return (
     <View style={tw` flex-1`}>
       <Image
         source={{
-          uri: movieItem.poster,
+          // to show the first episode poster of a season
+          uri: movie.seasons.items[index]?.episodes.items[0].poster,
         }}
         style={{
           width: "100%",
@@ -33,7 +46,7 @@ const DetailsScreen = () => {
         }}
       />
       <FlatList
-        data={episodes}
+        data={movie.seasons.items[index].episodes.items}
         renderItem={({ item }) => <EpisodeItem movieItem={item} />}
         //   it will be scrollable
         ListHeaderComponent={
@@ -90,6 +103,22 @@ const DetailsScreen = () => {
                 <Text style={tw`text-gray-300`}>Share</Text>
               </View>
             </View>
+
+            <Picker
+              selectedValue={selectedLanguage}
+              style={[tw`text-gray-300 w-36`]}
+              dropdownIconColor={"gray"}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedLanguage(itemValue)
+              }>
+              {movie.seasons.items.map((season) => (
+                <Picker.Item
+                  key={season.id}
+                  label={season.name}
+                  value={season.name}
+                />
+              ))}
+            </Picker>
           </View>
         }
       />

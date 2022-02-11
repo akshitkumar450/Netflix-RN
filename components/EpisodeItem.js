@@ -1,11 +1,8 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
 import tw from "tailwind-react-native-classnames";
-import movie from "../assets/movie";
 import { AntDesign } from "@expo/vector-icons";
 const EpisodeItem = ({ movieItem }) => {
-  const episode = movie.seasons.items[0];
-  const firstEpisode = movieItem;
   return (
     <View style={tw`my-3`}>
       <View style={tw`flex-row items-center justify-between mb-2`}>
