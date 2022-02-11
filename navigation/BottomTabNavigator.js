@@ -1,6 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
-import { AntDesign, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialIcons,
+  Ionicons,
+  Feather,
+} from "@expo/vector-icons";
+import DetailsScreen from "../screens/DetailsScreen";
+import { Pressable, View } from "react-native";
+
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
@@ -25,10 +33,23 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name={"Coming Soon"}
-        component={HomeScreen}
+        component={DetailsScreen}
         options={{
+          title: "Coming soon",
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="video-library" size={24} color={color} />
+          ),
+          headerRight: () => (
+            <View>
+              <View>
+                <Feather name="cast" color="white" size={25} />
+              </View>
+            </View>
+          ),
+          headerLeft: () => (
+            <Pressable>
+              <Ionicons name="chevron-back-outline" size={25} color="white" />
+            </Pressable>
           ),
         }}
       />

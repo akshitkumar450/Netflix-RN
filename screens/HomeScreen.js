@@ -5,9 +5,7 @@ import moviesData from "../assets/moviesData";
 import Row from "../components/Row";
 const HomeScreen = () => {
   return (
-    <View
-      showsVerticalScrollIndicator={false}
-      style={tw` flex-1 bg-black mt-8 p-2`}>
+    <View showsVerticalScrollIndicator={false} style={tw` flex-1 mt-8 p-2`}>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={moviesData}
