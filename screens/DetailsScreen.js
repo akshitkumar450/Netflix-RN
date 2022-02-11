@@ -18,6 +18,7 @@ import {
 } from "@expo/vector-icons";
 import EpisodeItem from "../components/EpisodeItem";
 import { Picker } from "@react-native-picker/picker";
+import VideoPlayer from "../components/VideoPlayer";
 const DetailsScreen = () => {
   //   const episodes = movie.seasons.items[0].episodes.items;
   //   const movieItem = episodes[0];
@@ -25,6 +26,12 @@ const DetailsScreen = () => {
     movie.seasons.items[0].name
   );
   const [index, setIndex] = useState(0);
+  const [currentVideo, setCurrentVideo] = useState(
+    "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+  );
+  const [currentVideoPoster, setCurrentVideoPoster] = useState(
+    "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/netflix/ep0.jpg"
+  );
 
   useEffect(() => {
     const index = movie.seasons.items.findIndex(
@@ -32,9 +39,11 @@ const DetailsScreen = () => {
     );
     setIndex(index);
   }, [selectedLanguage]);
+
   return (
     <View style={tw` flex-1`}>
-      <Image
+      {/*
+  <Image
         source={{
           // to show the first episode poster of a season
           uri: movie.seasons.items[index]?.episodes.items[0].poster,
@@ -45,9 +54,22 @@ const DetailsScreen = () => {
           resizeMode: "cover",
         }}
       />
+      */}
+      <View style={tw`h-1/2`}>
+        {/**first setp
+        <VideoPlayer episode={movie.seasons.items[index].episodes.items[0]} />
+      */}
+        <VideoPlayer video={currentVideo} poster={currentVideoPoster} />
+      </View>
       <FlatList
         data={movie.seasons.items[index].episodes.items}
-        renderItem={({ item }) => <EpisodeItem movieItem={item} />}
+        renderItem={({ item }) => (
+          <EpisodeItem
+            movieItem={item}
+            setCurrentVideo={setCurrentVideo}
+            setCurrentVideoPoster={setCurrentVideoPoster}
+          />
+        )}
         //   it will be scrollable
         ListHeaderComponent={
           <View style={tw`p-2`}>
